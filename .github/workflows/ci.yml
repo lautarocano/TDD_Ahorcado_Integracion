@@ -33,4 +33,4 @@ jobs:
           msbuild.exe TDD_Ahorcado.sln /p:platform="Any CPU" /p:configuration="Release"
         
       - name: Run Tests
-        run: vstest.console.exe .\UnitTestings\bin\Debug\UnitTestings.dll
+        run: vstest.console.exe .\UnitTestings\bin\Release\UnitTestings.dll
