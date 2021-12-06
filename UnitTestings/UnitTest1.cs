@@ -36,7 +36,7 @@ namespace UnitTestings
         {
             Juego game = new Juego();
             string nombre = "Martin!!#$%&";
-            Assert.AreEqual(game.setName(nombre), "Nombre invalido");
+            Assert.AreEqual(game.setName(nombre), "Nombre invalidoasdasd");
         }
 
         [TestMethod]
