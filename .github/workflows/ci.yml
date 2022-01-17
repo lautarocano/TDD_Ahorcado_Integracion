@@ -36,11 +36,11 @@ jobs:
         run: vstest.console.exe .\UnitTestings\bin\Release\UnitTestings.dll
         
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@master
     - name: build and push to docker
-      uses: docker/build-push-actions@v1
+      uses: docker/build-push-action@v1
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
