@@ -1,17 +1,16 @@
-FROM mcr.microsoft.com/dotnet/framework/sdk:3.5 AS build
-WORKDIR /app
+# Set the base image
+FROM mcr.microsoft.com/dotnet/framework/sdk:4.8 as build
+WORKDIR "/src"
 
-# copy csproj and restore as distinct layers
-COPY *.csproj .
-RUN dotnet restore
 
-# copy and build everything else
+# Copy packages to your image and restore them
+COPY TDD_Ahorcado.sln .
+COPY Ahorcado.MVC/Ahorcado.MVC.csproj Ahorcado.MVC/Ahorcado.MVC.csproj
+COPY Ahorcado.MVC/packages.config Ahorcado.MVC/packages.config
+RUN nuget restore Ahorcado.MVC/packages.config -PackagesDirectory packages
+
+
+# Add files from source to the current directory and publish the deployment files to the folder profile
 COPY . .
-WORKDIR /app
-RUN dotnet publish -c Release -o out --no-restore
-
-
-FROM mcr.microsoft.com/dotnet/framework/sdk:3.5 AS runtime
-WORKDIR /app
-COPY --from=build /app/out ./
-ENTRYPOINT ["dotnetapp.exe"]
+WORKDIR /src/Ahorcado.MVC
+RUN msbuild Ahorcado.MVC.csproj /p:Configuration=Release /m /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
