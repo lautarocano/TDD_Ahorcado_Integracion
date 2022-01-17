@@ -1,5 +1,5 @@
 # Set the base image
-FROM mcr.microsoft.com/dotnet/framework/sdk:4.8 as build
+FROM mcr.microsoft.com/dotnet/framework/sdk:4.8
 WORKDIR "/src"
 
 
