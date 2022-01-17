@@ -38,7 +38,7 @@ jobs:
   deploy:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
     - name: build and push to docker
       uses: docker/build-push-actions@v1
       with:
