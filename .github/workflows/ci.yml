@@ -36,7 +36,7 @@ jobs:
         run: vstest.console.exe .\UnitTestings\bin\Release\UnitTestings.dll
         
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@master
     - name: build and push to docker
