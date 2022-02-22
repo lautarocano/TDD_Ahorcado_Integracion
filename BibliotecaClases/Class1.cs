@@ -33,14 +33,25 @@ namespace BibliotecaClases
                 this.estadoPalabra += "_";
             }
             this.estadoAux = estadoPalabra.ToCharArray();
-            this.intentosRestantes = 5;
+            this.intentosRestantes = 6;
             this.letrasErradas = new List<char>();
         }
 
+        public string validarSecretWord()
+        {
+            if (string.IsNullOrWhiteSpace(palabraSecreta) || !palabraSecreta.All(char.IsLetter))
+            {
+                return "Palabra secreta invalida";
+            }
+            else
+            {
+                return "Valida";
+            }
+        }
 
         public string setName(string nombre)
         {
-            if (nombre == "" || nombre.Length > 20 || !nombre.All(char.IsLetterOrDigit))
+            if (nombre == "" || nombre.Length > 20 || !nombre.All(char.IsLetterOrDigit)) //aun no hicimos nada de pantalla de nombre, y si no hacemos raking es al pedo
             {
                 return "Nombre invalido";
             }
@@ -50,20 +61,23 @@ namespace BibliotecaClases
                 return "Nombre valido";
             }
         }
+        // en el trello tenemos el tema de puntuacion tambien relacionada al nombre no se que vamos a hacer con eso
 
         public string arriesgarPalabra(string palabra)
         {
-            if (string.IsNullOrWhiteSpace(palabra))
+            if (string.IsNullOrWhiteSpace(palabra) || !palabra.All(char.IsLetterOrDigit))
             {
                 return "Palabra invalida";
             }
             else if (palabra.ToLower() == this.palabraSecreta)
             {
+                estadoPalabra = palabraSecreta;
+                estadoAux = palabraSecreta.ToCharArray();
                 return "Palabra correcta";
-
             }
             else
             {
+                intentosRestantes = 0;
                 return "Palabra incorrecta";
             }
         }
@@ -91,18 +105,22 @@ namespace BibliotecaClases
                     int cont = 0;
                     foreach (char c in palabraSecreta)
                     {
-                        if (c == letra)
+                        if (c == char.ToLower(letra))
                         {
-                            estadoAux[cont] = letra;
+                            estadoAux[cont] = char.ToLower(letra);
                         }
                         cont++;
                     }
                     return "Acierto";
                 }
+                else if (letrasErradas.Contains(char.ToLower(letra)))
+                {
+                    return "Letra ya ingresada";
+                }
                 else
                 {
                     intentosRestantes--;
-                    letrasErradas.Add(letra); //comprobar que no esté ya ingresada
+                    letrasErradas.Add(letra);
                     return "Letra incorrecta";
                 }
             }
@@ -116,16 +134,12 @@ namespace BibliotecaClases
         {
             if (estadoAux.Contains('_')) return false;
             else return true;
-
-
-
         }
 
         public string mostrarEstado()
         {
             string estadoreturn = new string(estadoAux);
             return estadoreturn;
-
         }
     }
 }

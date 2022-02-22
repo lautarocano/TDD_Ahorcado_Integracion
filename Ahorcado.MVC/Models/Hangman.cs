@@ -18,6 +18,8 @@ namespace Ahorcado.MVC.Models
         public Int32? ChancesLeft { get; set; }
         [DisplayName("Letras Erradas")]
         public String WrongLetters { get; set; }
+        [DisplayName("Mensaje")]
+        public String Message { get; set; }
 
         public Boolean Win { get; set; }
 

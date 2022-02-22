@@ -15,8 +15,14 @@ HangmanVM = function (data) {
                 url: "/Hangman/InsertWordToGuess",
                 data: ko.mapping.toJS(self),
                 success: function (response) {
-                    self.enableWordToGuess(false);
                     ko.mapping.fromJS(response, {}, self);
+                    if (self.Message() !== "Palabra secreta invalida") {
+                        self.enableWordToGuess(false);
+                    }
+                    else {
+                        self.NotifyMessage(self.Message());
+                    }
+
                 },
                 error: function () {
 
@@ -31,12 +37,37 @@ HangmanVM = function (data) {
                 success: function (response) {
                     ko.mapping.fromJS(response, {}, self);
                     self.drawHangman();
-                    if(self.Win())
-                    {
+                    if (self.Message() !== "Acierto") {
+                        self.NotifyMessage(self.Message());
+                    }
+                    if (self.Win()) {
                         self.Notify("win");
                     }
-                    else if(self.ChancesLeft() == 0)
-                    {
+                    else if (self.ChancesLeft() == 0) {
+                        self.Notify("loss");
+                    }
+                },
+                error: function () {
+
+                }
+            })
+    }
+
+    self.tryWord = function () {
+        $.post(
+            {
+                url: "/Hangman/TryWord",
+                data: ko.mapping.toJS(self),
+                success: function (response) {
+                    ko.mapping.fromJS(response, {}, self);
+                    self.drawHangman();
+                    if (self.Message() !== "Palabra correcta") {
+                        self.NotifyMessage(self.Message());
+                    }
+                    if (self.Win()) {
+                        self.Notify("win");
+                    }
+                    else if (self.ChancesLeft() == 0) {
                         self.Notify("loss");
                     }
                 },
@@ -67,11 +98,31 @@ HangmanVM = function (data) {
                 opts.type = "success";
                 break;
         }
+        PNotify.removeAll();
         new PNotify(opts);
     }
 
-    self.resetGame = function()
-    {
+    self.NotifyMessage = function (message) {
+        var opts = {
+            cornerclass: "",
+            width: "30%",
+            buttons: {
+                closer: true,
+                sticker: false
+            },
+            dir1: 'right',
+            dir2: 'up',
+            firstpos1: 25,
+            firstpos2: 25,
+            push: 'top',
+            maxStrategy: 'close'
+        };
+        opts.text = message;
+        PNotify.removeAll();
+        new PNotify(opts);
+    }
+
+    self.resetGame = function () {
         self.enableWordToGuess(true);
         self.WordToGuess("");
         self.LetterTyped("");

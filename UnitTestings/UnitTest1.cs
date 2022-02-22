@@ -143,7 +143,7 @@ namespace UnitTestings
             Juego game = new Juego("Adios");
             game.setName("Martin");
             game.validarLetra('e');
-            Assert.AreEqual(game.intentosRestantes, 4);
+            Assert.AreEqual(game.intentosRestantes, 5);
         }
 
 
@@ -153,7 +153,7 @@ namespace UnitTestings
             Juego game = new Juego("Adios");
             game.setName("Martin");
             game.validarLetra('d');
-            Assert.AreEqual(game.intentosRestantes, 5);
+            Assert.AreEqual(game.intentosRestantes, 6);
         }
 
 
