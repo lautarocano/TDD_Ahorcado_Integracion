@@ -1,16 +1,19 @@
-# Set the base image
-FROM mcr.microsoft.com/dotnet/framework/sdk:4.8
-WORKDIR "/src"
+# Seteo de imagén base
+FROM mcr.microsoft.com/dotnet/framework/sdk:4.8 AS build
+WORKDIR /src
 
 
-# Copy packages to your image and restore them
-COPY TDD_Ahorcado.sln .
-COPY Ahorcado.MVC/Ahorcado.MVC.csproj Ahorcado.MVC/Ahorcado.MVC.csproj
-COPY Ahorcado.MVC/packages.config Ahorcado.MVC/packages.config
-RUN nuget restore Ahorcado.MVC/packages.config -PackagesDirectory packages
+# Copiar paquetes a la imagén y restaurarlos
+COPY *.sln .
+COPY Ahorcado.MVC/*.csproj ./Ahorcado.MVC/
+COPY Ahorcado.MVC/*.config ./Ahorcado.MVC/
+RUN nuget restore
 
+# Copiar todo lo restante y buildear el proyecto
+COPY Ahorcado.MVC/. ./Ahorcado.MVC/
+WORKDIR /src/Ahorcado.MVC/
+RUN msbuild /p:Configuration=Release -r:False
 
-# Add files from source to the current directory and publish the deployment files to the folder profile
-COPY . .
-WORKDIR /src/Ahorcado.MVC
-RUN msbuild Ahorcado.MVC.csproj /p:Configuration=Release /m /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
+FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8 AS runtime
+WORKDIR /inetpub/wwwroot
+COPY --from=build /src/Ahorcado.MVC/. ./
