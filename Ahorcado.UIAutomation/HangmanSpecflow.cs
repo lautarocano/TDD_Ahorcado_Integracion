@@ -26,7 +26,7 @@ namespace Ahorcado.UIAutomation
             driver  = new ChromeDriver(path, options);           
             driver = new ChromeDriver(path);
             */
-            baseURL = "http://localhost:39278/";
+            baseURL = "https://ahorcadomvc20220228171704.azurewebsites.net/";
         }
 
         //Primer test - perder el juego
