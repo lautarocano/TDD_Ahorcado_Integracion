@@ -65,12 +65,10 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1B73F53D916C4E3CA210DA47673EF16C }}
           package: .
-      
-      - name: Setup VSTest
-        uses: darenm/Setup-VSTest@v1
           
   ATest:
     runs-on: windows-latest
+    needs: deploy
 
     steps:
       - uses: actions/checkout@v2
