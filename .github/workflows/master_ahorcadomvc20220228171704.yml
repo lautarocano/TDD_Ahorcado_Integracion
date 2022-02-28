@@ -24,6 +24,16 @@ jobs:
 
       - name: Restore NuGet packages
         run: nuget restore
+        
+      - name: Setup VSTest
+        uses: darenm/Setup-VSTest@v1
+        
+      - name: Build Solution
+        run: |
+          msbuild.exe TDD_Ahorcado.sln /p:platform="Any CPU" /p:configuration="Release"
+          
+      - name: Run Unit Tests
+        run: vstest.console.exe .\UnitTestings\bin\Release\UnitTestings.dll
 
       - name: Publish to folder
         run: msbuild Ahorcado.MVC\Ahorcado.MVC.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
