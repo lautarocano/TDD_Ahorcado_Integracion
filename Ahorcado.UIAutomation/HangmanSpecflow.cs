@@ -61,6 +61,7 @@ namespace Ahorcado.UIAutomation
                 btnInsertLetter.SendKeys(Keys.Enter);
                 letterRisked++;
             }
+            Thread.Sleep(1000);
         }
 
         [Then(@"I should be told that I lost")]
@@ -109,6 +110,7 @@ namespace Ahorcado.UIAutomation
             letterTyped.SendKeys("A");
             Thread.Sleep(1000);
             btnInsertLetter.SendKeys(Keys.Enter);
+            Thread.Sleep(1000);
         }
 
         [Then(@"I should be told that I hit the letter")]
@@ -149,6 +151,7 @@ namespace Ahorcado.UIAutomation
             letterTyped.SendKeys("4");
             Thread.Sleep(1000);
             btnInsertLetter.SendKeys(Keys.Enter);
+            Thread.Sleep(1000);
         }
 
         [Then(@"It should tell me that the letter is invalid")]
@@ -190,6 +193,7 @@ namespace Ahorcado.UIAutomation
             letterTyped.SendKeys("teclado");
             Thread.Sleep(1000);
             btnRiskWord.SendKeys(Keys.Enter);
+            Thread.Sleep(1000);
         }
 
         [Then(@"I should be told that I win")]
