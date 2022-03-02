@@ -44,7 +44,6 @@ namespace UnitTestings
         {
             Juego game = new Juego();
             game.setName("Martin");
-            Console.WriteLine("test_deploy");
             Assert.AreEqual(game.arriesgarPalabra(""), "Palabra invalida");
         }
 
@@ -53,8 +52,6 @@ namespace UnitTestings
         {
             Juego game = new Juego();
             game.setName("Martin");
-            int test_push = 0;
-            test_push = 1;
             Assert.AreEqual(game.arriesgarPalabra("derrota"), "Palabra incorrecta");
         }
 
