@@ -33,7 +33,7 @@ jobs:
           msbuild.exe TDD_Ahorcado.sln /p:platform="Any CPU" /p:configuration="Release"
           
       - name: Run Unit Tests
-        run: vstest.console.exe .\UnitTestings\bin\Release\UnitTestings.dll
+        run: vstest.console.exe .\UnitTestings\bin\Release\UnitTestings.dll /EnableCodeCoverage
 
       - name: Publish to folder
         run: msbuild Ahorcado.MVC\Ahorcado.MVC.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
@@ -90,4 +90,4 @@ jobs:
           msbuild.exe TDD_Ahorcado.sln /p:platform="Any CPU" /p:configuration="Release"
           
       - name: Run Acceptance tests
-        run: vstest.console.exe .\Ahorcado.UIAutomation\bin\Release\Ahorcado.UIAutomation.dll
+        run: vstest.console.exe .\Ahorcado.UIAutomation\bin\Release\Ahorcado.UIAutomation.dll /EnableCodeCoverage
