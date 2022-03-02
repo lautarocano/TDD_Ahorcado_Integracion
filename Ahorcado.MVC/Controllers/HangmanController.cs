@@ -64,10 +64,12 @@ namespace Ahorcado.MVC.Controllers
             catch (FormatException e)
             {
                 model.Message = "Ingrese un caracter válido";
+                Console.WriteLine(e.Message);
             }
             catch (ArgumentNullException e)
             {
                 model.Message = "Ingrese una letra o palabra";
+                Console.WriteLine(e.Message);
             }
             return Json(model);
         }
